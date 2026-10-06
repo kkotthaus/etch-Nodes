@@ -148,6 +148,12 @@ Regeln für Komponenten, Block-Markup, Daten, CSS, Hell/Dunkel und KI-Kennzeichn
 - Ein Teil des Datenmodells steht nur in der Datenbank (Builder). Beitragstypen, Taxonomien, Feldgruppen und Einstellungsseiten deshalb per Export-Skript (WP-CLI `wp eval-file`, nur lesend, im Backend-Kontext) als JSON ins Repo holen und nach jeder Änderung neu exportieren.
 - Import-Dateien beim Import nur gezielt übernehmen (Feldliste), sonst überschreibt ein Import, was im Backend gepflegt wurde.
 
+## Backend
+
+- **Block „Individuelle Felder“ immer ausblenden** – in allen Beitragstypen, im Block-Editor und im klassischen Editor. Er zeigt die rohen Metadaten (auch die von Meta Box und internen Funktionen, z. B. Serialisiertes) und lässt sie ohne Prüfung ändern oder löschen. Eigene Felder kommen immer über Meta Box.
+- Technik im Snippet `<prefix>-backend.php`: den Kasten `postcustom` mit `remove_meta_box()` im Hook `add_meta_boxes` (späte Priorität) für alle Beitragstypen entfernen und im Filter `block_editor_settings_all` den Schlüssel `enableCustomFields` entfernen – dann verschwindet auch der Schalter „Individuelle Felder“ in den Voreinstellungen des Block-Editors.
+- **Nicht** `remove_post_type_support( …, 'custom-fields' )` verwenden: Ohne diese Unterstützung liefert die REST-API registrierte Metadaten (`register_post_meta` mit `show_in_rest`) nicht mehr aus.
+
 ## Barrierefreiheit
 
 - Ziel ist WCAG 2.1 AA. Farbkontraste regelt das Projekt, geprüft in beiden Farbschemata (siehe [Hell/Dunkel](#helldunkel)).
