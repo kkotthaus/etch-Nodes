@@ -24,7 +24,7 @@ Versionen stehen hier bewusst nicht. Welche Version ein Projekt einsetzt, hält 
 | Baustein | Plugin-Slug | Zweck | Doku |
 | --- | --- | --- | --- |
 | **Duplicator Pro** | `duplicator-pro` | Backup und Migration, z. B. lokale Seite → Staging → Live. | [duplicator.com/knowledge-base](https://duplicator.com/knowledge-base/) |
-| **SEOPress Pro** | `wp-seopress` + `wp-seopress-pro` | Titel und Beschreibungen, XML-Sitemap, Indexierung je Beitragstyp, strukturierte Daten, 301-Weiterleitungen und 404-Protokoll. | [seopress.org/support](https://www.seopress.org/support/) |
+| **SEOPress Pro** | `wp-seopress` + `wp-seopress-pro` | Titel und Beschreibungen, XML-Sitemap, Indexierung je Beitragstyp, strukturierte Daten, 301-Weiterleitungen und 404-Protokoll. Eigene MCP-Funktionen `seopress/…` (Regeln: [betrieb.md](betrieb.md#seopress-funktionen-mcp)). | [seopress.org/support](https://www.seopress.org/support/) |
 | **MCP Adapter** | `mcp-adapter` | Stellt WordPress-Funktionen (Abilities API) über das Model Context Protocol für KI-Werkzeuge bereit. Nur dort aktiv lassen, wo er gebraucht wird, und nur für berechtigte Benutzer freigeben. | – |
 
 ## Updates
