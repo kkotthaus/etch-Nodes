@@ -16,7 +16,7 @@ Diese Datei wird aus einem Projekt importiert (`@etch-nodes/CLAUDE.md`). Alle Ve
 - Keine Shortcodes, wenn es als Etch-Komponente geht: PHP liefert nur Daten, Markup baut die Komponente.
 - Das Repo ist die Quelle: Generator → Build → Sync. Inhalte nie direkt als MCP-Parameter übergeben.
 - Primär mit den Klassen, Variablen und Einstellungen von Automatic.css arbeiten; eigene Klassen und Variablen nur, wenn ACSS es nicht abdeckt (siehe [docs/konventionen.md](docs/konventionen.md#css)).
-- Für interaktive Bausteine (Accordion, Tabs, Dialog, Drawer, Lightbox, Carousel, Breadcrumbs, Inhaltsverzeichnis, Facets) OhMyEtch-Komponenten nutzen, nicht selbst bauen – **außer Navigation/Menüs** (keine OhMyEtch-Navigation). Siehe [docs/konventionen.md](docs/konventionen.md#komponenten).
+- Für interaktive Bausteine (Accordion, Tabs, Dialog, Drawer, Lightbox, Breadcrumbs, Inhaltsverzeichnis, Facets) OhMyEtch-Komponenten nutzen, nicht selbst bauen – **außer Navigation/Menüs** (keine OhMyEtch-Navigation). **Slider und Karussells immer mit Slider Pro for Etch** (`dwc-slider-pro-etch`), nicht mit dem OhMyEtch-Carousel. Siehe [docs/konventionen.md](docs/konventionen.md#komponenten).
 - Gestaltung (Farben, Schriften, Look) nach der Design-Doku des Projekts.
 - Schriften immer über den **Etch Font Manager** einbinden (selbst gehostet, auch Google Fonts), nie per eigenem `@font-face` oder externem Schriftdienst; Zuordnung zu Text/Überschriften nur in den ACSS-Einstellungen. Siehe [docs/konventionen.md](docs/konventionen.md#schriften).
 - Jede Website unterstützt Hell und Dunkel (ACSS `light dark`, folgt dem Gerät); ein Umschalter ist optional. Siehe [docs/konventionen.md](docs/konventionen.md#helldunkel).
