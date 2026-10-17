@@ -59,4 +59,6 @@ Bei jeder Update-Runde, mindestens einmal im Monat:
 3. Geänderte Einträge, die übernommen wurden, mit der vermerkten Version vergleichen (Changelog auf der Seite) und eine neue Fassung melden.
 4. Bewertung und Stand hier nachtragen.
 
+Die zentrale Übersicht der Projekte fragt die Quellen selbst ab (höchstens alle 6 Stunden, mit „Aktualisieren“ sofort) und zeigt an der Karte dieses Repos, wie viele Einträge seit dem Stand der Bewertung neu oder geändert sind. Maßgeblich ist das Datum „Stand“ in der Überschrift der Bewertung – nach jeder Prüfung nachtragen. Der Knopf „Prüfen“ startet Claude mit diesem Ablauf.
+
 Claude meldet Neues mit kurzer Einschätzung und übernimmt nichts ohne Auftrag.
