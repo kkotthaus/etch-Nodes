@@ -28,7 +28,9 @@ Ein Snippet je Website (WPCodeBox, gehört auf die Live-Seite). Es setzt um:
 
 **Keine Technik verraten**
 
-- `wp_generator`, RSD- und REST-Links aus dem `<head>` entfernen.
+- `wp_generator`, RSD-, REST- und Kurzlinks (`wp_shortlink_wp_head`, `wp_shortlink_header`) entfernen; `header_remove( 'X-Powered-By' )` (PHP-Version).
+- **Keine Versionsnummern:** `?ver=<Version>` an Skripten und Stilen im Frontend durch eine Kennung ersetzen (`style_loader_src`/`script_loader_src`, z. B. gekürzter `hash_hmac` der Version) – Browser laden nach Updates weiter neu, Erkennungsdienste wie Wappalyzer sehen aber keine Versionen mehr. Zeitstempel bleiben.
+- Dass die Seite WordPress ist (Pfade `wp-content/…`, Klassen), wird **nicht** verborgen: Das lässt sich nicht zuverlässig machen, bricht Plugins und Updates und schützt nicht. Entscheidend sind Versionsnummern, aktuelle Updates und die Härtung.
 - `readme.html`, `license.txt`, `wp-config-sample.php` und Daten-Ordner des Builds, die die Website nur vom Server liest (z. B. `wp-content/<prefix>/daten/`), in der `.htaccess` sperren.
 
 **Kopfzeilen** (bei `init` mit Priorität 0, nur im Frontend und für Anmeldeseiten)
