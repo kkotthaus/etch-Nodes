@@ -85,7 +85,8 @@ Die Live-Seite entsteht als Kopie der lokalen Seite (Dateien und Datenbank). WPC
 3. Beispiel- und Testinhalte entfernen; Test- und Beispielseiten nicht veröffentlicht lassen (sonst in der Sitemap).
 4. SEOPress prüfen: Sitemap-Inhalte, noindex für Autoren-, Datums-, Kategorie- und Schlagwort-Archive und interne Beitragstypen (per MCP: `seopress/get-sitemap-settings`, `seopress/list-posts-noindexed`, `seopress/get-technical-audit`).
 5. Paket erstellen; `wp-content/<prefix>` und `wp_wpcb_*` nicht ausschließen. Im Installer die neue Adresse mit `https://` angeben.
-6. Bei Ersatz einer bestehenden Seite: alte Seite vollständig sichern, zu übernehmende Inhalte klären, zuerst auf einer Test-Subdomain installieren, alte Adressen per 301 (SEOPress-Weiterleitungen) umleiten.
+6. Sicherheitsprüfung auf Staging bzw. lokal mit 0 Lücken (siehe [sicherheit.md](sicherheit.md#prüfen)); geschützte Ablagen außerhalb des Webverzeichnisses getrennt mitnehmen (nicht im Duplicator-Paket).
+7. Bei Ersatz einer bestehenden Seite: alte Seite vollständig sichern, zu übernehmende Inhalte klären, zuerst auf einer Test-Subdomain installieren, alte Adressen per 301 (SEOPress-Weiterleitungen) umleiten.
 
 **Nachher (live):**
 
@@ -101,6 +102,8 @@ Die Live-Seite entsteht als Kopie der lokalen Seite (Dateien und Datenbank). WPC
 10. Cron: `define( 'DISABLE_WP_CRON', true );` und beim Hoster einen Cronjob alle 5–15 Minuten auf `/wp-cron.php`.
 11. Sitemap in der Google Search Console einreichen, in den ersten Wochen das 404-Protokoll ansehen.
 12. SEOPress-Audit live laufen lassen (in der Oberfläche oder, falls freigegeben, per `seopress/get-technical-audit`): Startseite indexierbar, robots.txt erreichbar, Sicherheits-Header.
+13. Einmal als Administrator anmelden, damit die Snippets ihre `.htaccess`-Blöcke für die neue Adresse schreiben (Schutz, Hotlink-Schutz der Fotos); nachsehen, dass sie da sind. Auf OpenLiteSpeed die Sicherheits-Kopfzeilen für statische Dateien in der Konfiguration des virtuellen Hosts setzen.
+14. **Sicherheitsprüfung live – Pflicht nach jedem Umzug, vor der Freigabe:** `node tools/sicherheit-pruefen.mjs <Live-Adresse> --bericht`, Ziel 0 Lücken; Bericht und Verlauf im Projekt nachtragen (siehe [sicherheit.md](sicherheit.md#prüfen)). Danach mindestens einmal im Monat und nach Updates wiederholen.
 
 **Nach dem Livegang nie wieder per Duplicator veröffentlichen** – das überschreibt die komplette Live-Datenbank mit allem, was live gepflegt wurde. Spätere Änderungen gezielt übertragen: PHP im WPCodeBox-Editor bzw. per WPCodeBox Cloud oder kurzzeitig freigeschaltetem Snippet-Sync; Etch-Inhalte per Sync oder im Editor.
 
