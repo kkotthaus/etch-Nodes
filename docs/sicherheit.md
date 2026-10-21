@@ -49,6 +49,20 @@ Ein Snippet je Website (WPCodeBox, gehört auf die Live-Seite). Es setzt um:
 - Inhalt: die gesperrten Dateien und Ordner (`RewriteRule … - [F,L]`), dazu die Kopfzeilen per `mod_headers` für Dateien, die nicht durch PHP laufen.
 - **OpenLiteSpeed** liest Rewrite-Regeln aus der `.htaccess` (nach kurzer Zeit, ohne Neustart), übernimmt aber `Header` daraus nicht für Bilder und andere statische Dateien. Diese Kopfzeilen live in der Konfiguration des virtuellen Hosts setzen (root, macht der Nutzer). Auf nginx (lokal) gilt die `.htaccess` gar nicht – dort nur die PHP-Kopfzeilen prüfen.
 
+## Security Ninja (nur live)
+
+Auf jeder Live-Seite läuft zusätzlich **Security Ninja Premium** (`security-ninja-premium`). Es ergänzt das Snippet `<prefix>-schutz.php` (Firewall, Sperrlisten, 404-Schutz), ersetzt es aber nicht: Die Sperre des Snippets greift zuerst und gilt auch dort, wo Security Ninja nicht läuft.
+
+- **Nur live** (`production` in der Plugin-Liste). Lokal und auf Staging aus: Die Firewall blockt Anfragen ohne Browser-Kennung, also auch den MCP-Zugang und Prüfungen mit `curl`. Kommt eine Live-Kopie per Duplicator auf lokal oder Staging, Security Ninja dort deaktivieren.
+- **Datenschutz**: „Cloud“ und „Global Ban Network“ aus. Sonst gehen die IP-Adressen der Besucher an den Dienst des Herstellers, und die Datenschutzerklärung braucht einen Hinweis.
+- **Anmeldung**: In Version 5.305 wird der Schalter „Wiederholte Anmeldeversuche blockieren“ nicht abgefragt, und jeder Fehlversuch zählt doppelt. Mit den Grundwerten ist nach 3 Fehlversuchen die **ganze Website** für die IP-Adresse gesperrt – bei gemeinsamer Adresse (Büro, Verein, Familie) für alle, auch für Apps. Deshalb:
+  - Firewall › „Verhindern des Zugriffs gesperrter IPs auf die Website“ **aus** (gesperrte Adressen können sich nicht anmelden, sehen aber die Website)
+  - Sperrregel **10** Fehlversuche in 5 Minuten (= 5 echte), Sperre **30 Minuten**
+  - „Wiederholte Anmeldeversuche blockieren“ aus
+- **Firewall** (Angriffsmuster, 404-Schutz, Anfragen ohne Browser-Kennung) mit den Grundwerten lassen. Besucher, Suchmaschinen und Apps mit Browser-Kennung sind nicht betroffen. Prüfwerkzeuge schicken eine Browser-Kennung mit.
+- **Zugänge nicht sperren**: Hat eine Live-Seite einen MCP-Zugang oder eigene Apps und Schnittstellen, nach dem Einrichten prüfen, dass Security Ninja sie durchlässt.
+- Die Einstellungen setzt der Nutzer im Backend; im Verlauf der Projekt-Doku festhalten. **Nach jedem Update von Security Ninja** die Sperre nach Fehlversuchen von einer fremden IP-Adresse erneut prüfen (nur die Anmeldung gesperrt, Website und Apps antworten).
+
 ## Fotos von Personen
 
 Pflicht, wenn die Website Fotos von Personen zeigt, die nicht selbst entschieden haben, dass sie öffentlich sein sollen (Kinder, Mitglieder, Patienten, Mitarbeiter). Snippet `<prefix>-fotos.php` o. ä.:
