@@ -242,13 +242,13 @@ Die Texte im Dialog (`aria-label`, `title`) haben eine deutsche Vorgabe; ein Pro
 **Text im Editor bearbeiten: Etch Text Editor** (Plugin `etch-text-editor`). Im Etch-Editor einen Textblock auswählen und „Edit“ klicken; ein Popup bearbeitet den Text samt Formatierung. Es arbeitet auch mit Gutenberg-Textblöcken, die Etch sonst nur durchreicht – sie bleiben Gutenberg-Blöcke.
 
 - **Nur für Seiten, die im Editor gepflegt werden.** Texte auf Seiten, Templates und Komponenten aus dem Repo überschreibt der nächste Sync (siehe [Architektur](#architektur)); dort den Text im Repo ändern.
-- **Schließen speichert die ganze Seite** (Klick neben das Popup, „Close“, das X): nicht nur den Text, sondern alles, was im Editor gerade offen ist. Vorher andere Änderungen fertig machen oder verwerfen. Verwerfen nur über „Discard“ oder Esc.
+- **Speichern speichert die ganze Seite** („Close“, Klick neben das Popup oder Strg/Cmd+Enter): nicht nur den Text, sondern alles, was im Editor gerade offen ist. Vorher andere Änderungen fertig machen oder verwerfen. Das X, „Discard“ und Esc verwerfen den Text; bei ungespeicherten Änderungen fragt das Popup vorher nach (auf Englisch).
 - **Farbe nur über „var“** (Farbvariablen von ACSS), nie über den freien Farbwähler – der schreibt einen festen Farbwert in den Text und bricht das dunkle Schema (siehe [Hell/Dunkel](#helldunkel)). Welche Farben im Text erlaubt sind, legt das Design des Projekts fest.
 - Formatierung im Text sparsam: Farbe und Schriftstärke landen als `<span style="…">` im Inhalt. Was für alle Stellen gleich gelten soll, gehört als Klasse ins Stylesheet, nicht in jeden Text einzeln.
 - Fett und kursiv sind Betonung (`strong`, `em`), kein Ersatz für Überschriften. Links brauchen einen Linktext, der das Ziel nennt.
-- Das Skript wird für angemeldete Benutzer mit dem Recht `edit_posts` geladen und wirkt nur im Etch-Editor. Es ruft nur die eigene REST-API auf (Suche nach Seiten, Beiträgen und Medien für Links).
+- Das Skript wird für angemeldete Benutzer mit dem Recht `edit_posts` geladen und wirkt nur im Etch-Editor. Es ruft nur die eigene REST-API auf (Suche nach Seiten, Beiträgen und Medien für Links). Das PHP fragt im Backend die GitHub-API nach neuen Releases (Update-Prüfung).
 - Hängt an der experimentellen Schnittstelle `window.etch` (dieselbe wie beim Etch AI Connector, aber ohne ihn: der Connector bleibt aus) – nach jedem Etch-Update prüfen (siehe [Updates](development-environment.md#updates)).
-- Im Handbuch des Projekts erklären: wo „Edit“ erscheint, dass Schließen speichert, und die Farbregel.
+- Im Handbuch des Projekts erklären: wo „Edit“ erscheint, dass „Close“ bzw. ein Klick neben das Popup speichert und das X verwirft, und die Farbregel.
 
 Das globale Stylesheet des Projekts kommt per Sync in Etch und braucht keinen dieser Hooks. Pfade über `content_url()` bzw. die Projekt-Konstante, nie über `get_stylesheet_directory_uri()` oder `__DIR__` (siehe [Betrieb](betrieb.md#php-als-wpcodebox-snippets)).
 
