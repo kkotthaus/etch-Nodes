@@ -121,3 +121,14 @@ Mails der Website gehen über **FluentSMTP** (`fluent-smtp`) und den SMTP-Server
 ## Caching
 
 Seiten mit Daten, die relativ zu „jetzt“ berechnet werden (Status, Fristen, „heute geöffnet“), vom Seitencache ausnehmen oder sehr kurz cachen (z. B. 5 Minuten); tagesabhängige Seiten höchstens einen Tag.
+
+**LiteSpeed Cache** (`litespeed-cache`, nur live – der Server ist OpenLiteSpeed). Ohne Seitencache rechnet WordPress jede Seite neu (bei Etch-Seiten rund eine Sekunde bis zur ersten Antwort), mit Cache kommt sie in unter 0,1 Sekunden.
+
+- **An:** Seitencache 7 Tage, Browser-Cache, alte Fassung ausliefern, während neu aufgebaut wird (`purge-stale`), Cache nach Updates leeren, CSS/JS/HTML verkleinern, Emoji-Skript entfernen.
+- **Aus:** Zusammenfassen und Verzögern von CSS/JS (bricht Slider und Mega-Menü leicht), Query-Strings entfernen (bräche das Neuladen nach Updates), Lazy Load (macht WordPress selbst), QUIC.cloud mit Bild- und CSS-Diensten (Daten an Dritte), Crawler.
+- **Schnittstellen (REST) nicht zwischenspeichern** (`cache-rest` aus), wenn eigene Schnittstellen von „heute“ abhängen; Schnittstellen, die einen gecachten Zustand berichtigen, antworten selbst mit `X-LiteSpeed-Cache-Control: no-cache`.
+- **Object-Cache** (Redis) nur mit eigener Redis-Datenbank je Website, die vorher geklärt ist; sonst aus.
+- **Leeren aus dem Code:** Snippets, die Daten für viele Seiten speichern (Einstellungsseiten, eigene Pläne, Sync), rufen danach `do_action( 'litespeed_purge_all' )` auf; ohne Plugin ist das wirkungslos. Seiten und Beiträge leert das Plugin beim Speichern selbst.
+- **Tagesabhängige Daten auf allen Seiten** (z. B. über `etch/dynamic_data/option`, das auf jeder Seite rechnet): die Lebensdauer bis Mitternacht begrenzen, `do_action( 'litespeed_control_set_ttl', $sekunden_bis_mitternacht )` bei `template_redirect`.
+- Per WP-CLI einstellen mit `wp litespeed-option set <schlüssel> <wert>`; zum Leeren `wp eval 'do_action( "litespeed_purge_all" );'` – `wp litespeed-purge all` ruft die Seite über HTTP auf und kann scheitern.
+- Prüfen von außen: zweimal dieselbe Seite abrufen, beim zweiten Mal `x-litespeed-cache: hit`. Danach die Sicherheitsprüfung wiederholen.
