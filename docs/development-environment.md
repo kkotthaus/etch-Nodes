@@ -46,7 +46,9 @@ Ein Plugin nur für eine einzelne Website steht nicht hier, sondern bei dieser W
 
 ## Updates
 
-- Automatische Updates sind aus: für WordPress, Themes, Übersetzungen und alle fremden Plugins. Diese Updates werden von Hand eingespielt.
+- Automatische Updates sind aus: für neue Hauptversionen von WordPress, Themes, Übersetzungen und alle fremden Plugins. Diese Updates spielt das Server-Werkzeug ein – normal zuerst auf Staging, dann live mit der getesteten Version.
+- **Ausnahme: Wartungsversionen von WordPress** (z. B. 6.9.1 → 6.9.2) kommen automatisch, in jeder Umgebung. Sie bringen fast nur Sicherheitskorrekturen.
+- **Schnellweg bei einer Sicherheitslücke:** Ein Plugin mit bekannter Lücke wird sofort live aktualisiert, ohne Staging davor – mit Sicherung vorab, Prüfung danach (Startseite, Header, Formular, Sicherheitsprüfung) und Rückweg bei Fehler; Staging und lokal ziehen danach nach, die Version wird in der Plugin-Liste nachgetragen. Gilt auch für Etch, ACSS, OhMyEtch, Slider Pro und EMMP, die sonst immer zuerst auf Staging gehen.
 - **Ausnahme: die eigenen Plugins** (z. B. `bausteine-backend`). Sie tragen im Kopf eine `Update URI` auf den eigenen Update-Server und aktualisieren sich selbst. Lokale und Staging-Seiten (`WP_ENVIRONMENT_TYPE` = `local`, `development`, `staging`) bekommen jede gebaute Version, Live-Seiten (`production`) nur ausdrücklich freigegebene – eine neue Version läuft also zuerst lokal und auf Staging. Das Umgebungs-mu-plugin des Server-Werkzeugs lässt genau diese Updates zu und sperrt alle anderen. Je Website abschalten: `define( 'BAUSTEINE_AUTO', false );` in der `wp-config.php`. Nach einem Update eines eigenen Plugins gilt dieselbe Prüfung wie unten für das, was es berührt.
 - **EMMP aktualisieren** (kein Plugin, deshalb von Hand im Etch-Editor, zuerst lokal):
   1. Im [Changelog](https://design-with-cracka.gitbook.io/megamenupro/changelog) nachsehen, was die Version ändert und ob sie nur das CSS oder CSS und Komponenten betrifft. Bei Gumroad JSON und CSS der vollen Version laden, nicht die von Lite.
@@ -56,7 +58,7 @@ Ein Plugin nur für eine einzelne Website steht nicht hier, sondern bei dieser W
      - Wer Werte direkt in den Stil-Einträgen von EMMP geändert hat (`.dwc-*-vars`), verliert sie beim Überschreiben. Dafür gibt es den [Updater](https://etch.designwithcracka.com/mmpro-updater/) des Herstellers, der altes und neues JSON zusammenführt („Carry Over“). Nach Standard stehen Anpassungen im Stylesheet des Projekts (siehe [konventionen.md](konventionen.md#css)); dann genügt das JSON des Herstellers.
   5. Im Etch-Stylesheet `DWC Mega Menu` das CSS durch das der neuen Version ersetzen. JSON und CSS gehören zusammen, immer beide auf denselben Stand bringen.
   6. Prüfen: Komponenten-IDs unverändert (siehe [konventionen.md](konventionen.md#komponenten)), dann Frontend wie unten, zusätzlich Skip-Link und Tastaturbedienung. Erst danach auf Staging und live wiederholen.
-- **Etch Text Editor: regelmäßig nach Updates suchen.** Ab Version 1.0.20 meldet das Plugin neue GitHub-Releases selbst in der Plugin-Liste von WordPress; automatisch eingespielt werden sie nicht (das Umgebungs-mu-plugin lässt nur die eigenen Plugins durch). Trotzdem bei jeder Update-Runde, mindestens einmal im Monat, und vor jedem Etch-Update die neueste Version auf GitHub mit der installierten vergleichen:
+- **Etch Text Editor: regelmäßig nach Updates suchen.** Ab Version 1.0.20 meldet das Plugin neue GitHub-Releases selbst in der Plugin-Liste von WordPress; automatisch eingespielt werden sie nicht (das Umgebungs-mu-plugin lässt nur die eigenen Plugins und Wartungsversionen von WordPress durch). Trotzdem bei jeder Update-Runde, mindestens einmal im Monat, und vor jedem Etch-Update die neueste Version auf GitHub mit der installierten vergleichen:
   ```bash
   gh api repos/electricarts/etch-text-editor/releases/latest --jq .tag_name
   wp plugin get etch-text-editor --field=version
