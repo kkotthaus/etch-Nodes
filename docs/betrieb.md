@@ -121,7 +121,7 @@ Mails der Website gehen über das eigene Plugin **KBS Mail** (`kbs-mail`, seit 1
 - **Protokoll** an, Inhalte nur mit kurzer Frist (z. B. 14–30 Tage): Sie enthalten Personendaten aus Formularen. Darin sieht man, ob eine Mail verschickt wurde, und kann sie erneut senden.
 - **Grenze je Verbindung** (Mails je Minute, Stunde, Tag) nach den Vorgaben des Postfachs; Mails darüber warten und gehen der Reihe nach raus. Bei Fehlern Hinweis im Backend und eine Warnung über eine andere Verbindung.
 - Nach der Einrichtung live: Testmail aus KBS Mail, dann ein echtes Formular absenden und Zustellung, Absender und Spam-Ordner prüfen. SPF/DKIM der Domain müssen den SMTP-Server bzw. Microsoft 365 erlauben.
-- **Websites mit FluentSMTP** stellen bei der nächsten Gelegenheit um: KBS Mail einrichten und testen, dann FluentSMTP deaktivieren und entfernen (Zugangsdaten von FluentSMTP aus der `wp-config.php` nehmen).
+- **Websites mit FluentSMTP** stellen bei der nächsten Gelegenheit um: in KBS Mail unter Verbindungen „Aus FluentSMTP übernehmen“ (bzw. `wp kbs-mail fluentsmtp --uebernehmen`) – übernimmt SMTP-Verbindungen samt Passwort verschlüsselt, ohne es anzuzeigen; Microsoft-Verbindungen von FluentSMTP neu über „Anleitung 365“ einrichten. Dann Testmail (`wp kbs-mail test --an=<adresse>`) und ein Formular absenden, FluentSMTP deaktivieren und entfernen, das Passwort als `KBS_MAIL_<KENNUNG>` in die `wp-config.php` und die Zugangsdaten von FluentSMTP dort herausnehmen.
 
 ## Caching
 
